@@ -144,31 +144,97 @@ class LinkedList {
     }
 
     insertAt(value, index){
-        if(!this.head || value < 0){
-            return null;
-        } else {
-            let currentNode = this.head;
-            let i = 0;
-            while(i < index && currentNode.next){
-                currentNode = currentNode.next;
+        if (index < 0) return null;
+
+        const newNode = new Node(value);
+
+        if (index === 0) {
+            // Insert at the head
+            newNode.next = this.head;
+            this.head = newNode;
+            if (!this.tail) {
+              // If the list was empty, update the tail as well
+              this.tail = newNode;
             }
-            let nextNode = currentNode.next;
-            currentNode.next = null;
-            currentNode.next = new Node(value);
-            currentNode = currentNode.next;
-            currentNode.next = nextNode;
             return true;
         }
+
+        let currentNode = this.head;
+        let i = 0;
+
+        while (currentNode && i < index - 1) {
+            currentNode = currentNode.next;
+            i++;
+        }
+
+        if (!currentNode) return false; // Index is out of bounds
+        
+        newNode.next = currentNode.next;
+        currentNode.next = newNode;
+    
+        if (!newNode.next) {
+          // If the new node is inserted at the end, update the tail
+          this.tail = newNode;
+        }
+    
+        return true;
+      }
+      
+    // Method to remove a node at a specific index
+    removeAt(index) {
+        if (index < 0 || !this.head) return null; // Index is invalid or list is empty
+
+        if (index === 0) {
+            // Remove the head node
+            const removedValue = this.head.value;
+            this.head = this.head.next;
+            if (!this.head) {
+                // If the list becomes empty, update the tail
+                this.tail = null;
+            }
+            return removedValue;
+        }
+
+        let currentNode = this.head;
+        let i = 0;
+
+        while (currentNode.next && i < index - 1) {
+            currentNode = currentNode.next;
+            i++;
+        }
+
+        if (!currentNode.next) return null; // Index is out of bounds
+
+        const removedValue = currentNode.next.value;
+        currentNode.next = currentNode.next.next;
+
+        if (!currentNode.next) {
+            // If the removed node was the tail, update the tail
+            this.tail = currentNode;
+        }
+
+        return removedValue;
     }
 }
 
+// Example usage:
 const list = new LinkedList();
 list.append(1);
 list.append(2);
 list.append(3);
 list.prepend(0);
-console.log(list.insertAt(60, 2));
-console.log('LinkedList:', list.toString());
+
+list.insertAt(1.5, 2);
+console.log('LinkedList:', list.toString()); // Output: ( 0 ) -> ( 1 ) -> ( 1.5 ) -> ( 2 ) -> ( 3 ) -> null
+
+list.removeAt(2);
+console.log('LinkedList after removal:', list.toString()); // Output: ( 0 ) -> ( 1 ) -> ( 2 ) -> ( 3 ) -> null
+
+list.removeAt(0);
+console.log('LinkedList after removing head:', list.toString()); // Output: ( 1 ) -> ( 2 ) -> ( 3 ) -> null
+
+list.removeAt(2);
+console.log('LinkedList after removing tail:', list.toString()); // Output: ( 1 ) -> ( 2 ) -> null
 
 
 
