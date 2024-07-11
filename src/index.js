@@ -14,7 +14,7 @@ class LinkedList {
     append(value) {
         const newNode = new Node(value);
         if(!this.head){
-            // If the list is empty, the new node is both the head and tail
+            // If the list is null/empty, the new node is both the head and tail
             this.head = newNode;
             this.tail = newNode;
         }else {
@@ -22,5 +22,28 @@ class LinkedList {
             this.tail = newNode;
         }
     }
+
+    prepend(value) {
+        const newNode = new Node(value);
+        if(!this.head) {
+            this.head = newNode;
+            this.tail = newNode;
+        } else {
+            newNode.next = this.head;
+            this.head = newNode;
+        }
+    }
+
+    size(){
+        let i = 0;
+        let currentNode = this.head;
+        while(!this.head){
+            i++;
+            currentNode = currentNode.next;
+        }
+        return i;
+    }
+
+
 }
 
