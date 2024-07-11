@@ -44,6 +44,16 @@ class LinkedList {
         return i;
     }
 
+    head(){
+        if(this.head){
+            return this.head.value;
+        } else {
+            return null;
+        }
+    }
 
+    
 }
+
+
 
