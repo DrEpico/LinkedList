@@ -142,6 +142,24 @@ class LinkedList {
             return output;
         }
     }
+
+    insertAt(value, index){
+        if(!this.head || value < 0){
+            return null;
+        } else {
+            let currentNode = this.head;
+            let i = 0;
+            while(i < index && currentNode.next){
+                currentNode = currentNode.next;
+            }
+            let nextNode = currentNode.next;
+            currentNode.next = null;
+            currentNode.next = new Node(value);
+            currentNode = currentNode.next;
+            currentNode.next = nextNode;
+            return true;
+        }
+    }
 }
 
 const list = new LinkedList();
@@ -149,6 +167,8 @@ list.append(1);
 list.append(2);
 list.append(3);
 list.prepend(0);
-
+console.log(list.insertAt(60, 2));
 console.log('LinkedList:', list.toString());
+
+
 
