@@ -61,5 +61,45 @@ class LinkedList {
             return null;
         }
     }
+
+    at(index){
+        if (index < 0) return null; // Index should be non-negative
+        if(this.head) {
+            let currentNode = this.head;
+            let i = 0;
+            while(i < index){
+                i++;
+                currentNode = currentNode.next;
+            }
+            return currentNode ? currentNode : null; // Return the node if found, else null
+        }
+    }
+
+    pop(){
+        if (!this.tail) {
+            console.log("No item to pop");
+            return null;
+        }
+
+        const poppedValue = this.tail.value;
+
+        if (this.head === this.tail) {
+            // If there's only one node in the list
+            this.head = null;
+            this.tail = null;
+            return poppedValue;
+        }
+
+        let currentNode = this.head;
+        while(currentNode.next !== this.tail){
+            currentNode = currentNode.next;
+        }
+        // Now currentNode is the second-to-last node
+        currentNode.next = null;
+        this.tail = currentNode;
+
+        return poppedValue;
+    }
+
 }
 
