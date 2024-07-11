@@ -124,5 +124,31 @@ class LinkedList {
         }
         return -1;
     }
+
+    toString(){
+        let output = ""
+        if(!this.head){
+            return null;
+        } else {
+            let currentNode = this.head;
+            while(currentNode){
+                if(currentNode.next === null){
+                    return output += "null" ;
+                } else {
+                    output += `( ${currentNode.value} ) -> `;
+                    currentNode = currentNode.next
+                }
+            }
+            return output;
+        }
+    }
 }
+
+const list = new LinkedList();
+list.append(1);
+list.append(2);
+list.append(3);
+list.prepend(0);
+
+console.log('LinkedList:', list.toString());
 
