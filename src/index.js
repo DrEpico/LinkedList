@@ -46,14 +46,20 @@ class LinkedList {
 
     head(){
         if(this.head){
-            return this.head.value;
+            const headNode = this.head;
+            return headNode;
         } else {
             return null;
         }
     }
 
-    
+    tail(){
+        if(this.tail){
+            const tailNode = this.tail;
+            return tailNode;
+        } else {
+            return null;
+        }
+    }
 }
-
-
 
