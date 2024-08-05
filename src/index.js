@@ -1,11 +1,11 @@
-export class Node {
+class Node {
     constructor(value){
         this.value = value;
         this.next = null;
     }
 }
 
-export class LinkedList {
+class LinkedList {
     constructor() {
         this.head = null;
         this.tail = null;
@@ -216,3 +216,5 @@ export class LinkedList {
         return removedValue;
     }
 }
+
+module.exports = LinkedList;
