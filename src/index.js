@@ -1,5 +1,5 @@
 class Node {
-    constructor(value){
+    constructor(value) {
         this.value = value;
         this.next = null;
     }
@@ -13,11 +13,10 @@ class LinkedList {
 
     append(value) {
         const newNode = new Node(value);
-        if(!this.head){
-            // If the list is null/empty, the new node is both the head and tail
+        if (!this.head) {
             this.head = newNode;
             this.tail = newNode;
-        }else {
+        } else {
             this.tail.next = newNode;
             this.tail = newNode;
         }
@@ -25,7 +24,7 @@ class LinkedList {
 
     prepend(value) {
         const newNode = new Node(value);
-        if(!this.head) {
+        if (!this.head) {
             this.head = newNode;
             this.tail = newNode;
         } else {
@@ -34,48 +33,36 @@ class LinkedList {
         }
     }
 
-    size(){
-        let i = 0;
+    size() {
+        let count = 0;
         let currentNode = this.head;
-        while(!this.head){
+        while (currentNode) {
+            count++;
+            currentNode = currentNode.next;
+        }
+        return count;
+    }
+
+    getHead() {
+        return this.head ? this.head.value : null;
+    }
+
+    getTail() {
+        return this.tail ? this.tail.value : null;
+    }
+
+    at(index) {
+        if (index < 0) return null;
+        let currentNode = this.head;
+        let i = 0;
+        while (currentNode && i < index) {
             i++;
             currentNode = currentNode.next;
         }
-        return i;
+        return currentNode ? currentNode.value : null;
     }
 
-    head(){
-        if(this.head){
-            const headNode = this.head;
-            return headNode;
-        } else {
-            return null;
-        }
-    }
-
-    tail(){
-        if(this.tail){
-            const tailNode = this.tail;
-            return tailNode;
-        } else {
-            return null;
-        }
-    }
-
-    at(index){
-        if (index < 0) return null; // Index should be non-negative
-        if(this.head) {
-            let currentNode = this.head;
-            let i = 0;
-            while(i < index){
-                i++;
-                currentNode = currentNode.next;
-            }
-            return currentNode ? currentNode : null; // Return the node if found, else null
-        }
-    }
-
-    pop(){
+    pop() {
         if (!this.tail) {
             console.log("No item to pop");
             return null;
@@ -84,17 +71,15 @@ class LinkedList {
         const poppedValue = this.tail.value;
 
         if (this.head === this.tail) {
-            // If there's only one node in the list
             this.head = null;
             this.tail = null;
             return poppedValue;
         }
 
         let currentNode = this.head;
-        while(currentNode.next !== this.tail){
+        while (currentNode.next !== this.tail) {
             currentNode = currentNode.next;
         }
-        // Now currentNode is the second-to-last node
         currentNode.next = null;
         this.tail = currentNode;
 
@@ -103,9 +88,9 @@ class LinkedList {
 
     contains(value) {
         let currentNode = this.head;
-        while(currentNode.next !== null){
-            if(currentNode.value === value){
-                return true
+        while (currentNode) {
+            if (currentNode.value === value) {
+                return true;
             }
             currentNode = currentNode.next;
         }
@@ -115,8 +100,8 @@ class LinkedList {
     find(value) {
         let currentNode = this.head;
         let i = 0;
-        while(currentNode){
-            if(currentNode.value === value){
+        while (currentNode) {
+            if (currentNode.value === value) {
                 return i;
             }
             currentNode = currentNode.next;
@@ -125,36 +110,26 @@ class LinkedList {
         return -1;
     }
 
-    toString(){
-        let output = ""
-        if(!this.head){
-            return null;
-        } else {
-            let currentNode = this.head;
-            while(currentNode){
-                if(currentNode.next === null){
-                    return output += "null" ;
-                } else {
-                    output += `( ${currentNode.value} ) -> `;
-                    currentNode = currentNode.next
-                }
-            }
-            return output;
+    toString() {
+        let output = "";
+        let currentNode = this.head;
+        while (currentNode) {
+            output += `( ${currentNode.value} ) -> `;
+            currentNode = currentNode.next;
         }
+        return output + "null";
     }
 
-    insertAt(value, index){
+    insertAt(value, index) {
         if (index < 0) return null;
 
         const newNode = new Node(value);
 
         if (index === 0) {
-            // Insert at the head
             newNode.next = this.head;
             this.head = newNode;
             if (!this.tail) {
-              // If the list was empty, update the tail as well
-              this.tail = newNode;
+                this.tail = newNode;
             }
             return true;
         }
@@ -167,29 +142,25 @@ class LinkedList {
             i++;
         }
 
-        if (!currentNode) return false; // Index is out of bounds
-        
+        if (!currentNode) return false;
+
         newNode.next = currentNode.next;
         currentNode.next = newNode;
-    
+
         if (!newNode.next) {
-          // If the new node is inserted at the end, update the tail
-          this.tail = newNode;
+            this.tail = newNode;
         }
-    
+
         return true;
-      }
-      
-    // Method to remove a node at a specific index
+    }
+
     removeAt(index) {
-        if (index < 0 || !this.head) return null; // Index is invalid or list is empty
+        if (index < 0 || !this.head) return null;
 
         if (index === 0) {
-            // Remove the head node
             const removedValue = this.head.value;
             this.head = this.head.next;
             if (!this.head) {
-                // If the list becomes empty, update the tail
                 this.tail = null;
             }
             return removedValue;
@@ -203,13 +174,12 @@ class LinkedList {
             i++;
         }
 
-        if (!currentNode.next) return null; // Index is out of bounds
+        if (!currentNode.next) return null;
 
         const removedValue = currentNode.next.value;
         currentNode.next = currentNode.next.next;
 
         if (!currentNode.next) {
-            // If the removed node was the tail, update the tail
             this.tail = currentNode;
         }
 
